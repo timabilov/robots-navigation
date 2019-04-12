@@ -2,12 +2,12 @@
 
 # Robot API for navigation 
 
-To run project on docker-compose
-```bash
-./entry.sh
-```
+API Interface for scheduling robot routes.
 
 
+Requirements:
+
+ `Postgres 9.6`
 ```ini
 Django==2.0.12
 psycopg2==2.7.3.2
@@ -16,6 +16,29 @@ pytest==4.4.0
 pytest-django==3.4.8
 mixer==6.1.3
 ```
+
+
+To just run script(down below) with already up & running Postgres :
+```bash
+(venv) $ ./script.sh
+```
+
+
+Or with docker-compose (Recommended):
+
+```bash
+$ docker-compose run --rm web ./script.sh
+# or
+$ docker-compose run --rm web  bash 
+root@e2a026903899:/app# ./script.sh   
+```
+
+To run django project on docker-compose
+```bash
+./entry.sh
+```
+
+
 
 ```python
 from core.geo import Direction
