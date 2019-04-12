@@ -63,10 +63,10 @@ from core.route import RouteBuilder
 # Create routes from file and save all to database
 routeset = RouteBuilder.from_yaml('route.yml').save()  # class RouteSet - wrapper
 
-# Robot has own API. Also robots can be separated to groups for further relevant route consuming
+# We can use directly Robot API. Robots can be separated to groups for further relevant route consuming
 r = Robot().forward(3).forward(5)
 
-# Also robot can interpret route which can be created by many different ways
+# Robot can interpret route which can be created by many different ways
 for i, route in enumerate(Route.objects.all(), start=1):
     print(f'Route: {i}')
     r.load(route)
