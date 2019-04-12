@@ -1,0 +1,19 @@
+- name: 'My route'
+  start: '10:10'
+  steps:
+    - north: 3
+    - east: 3
+    - right:
+    - right:
+    - right:
+    - forward: 3
+    - reach: 'Saint Valley'
+
+- name: 'Route only for packagers'
+  target: "Packagers"
+  steps:
+    - north: 3
+    - east: 3
+    - right:
+
+    - forward: 10
