@@ -1,4 +1,6 @@
-# Robot API for navigation timabilov / django-social-sample [![Build Status](https://travis-ci.com/timabilov/robots-navigation.svg?branch=master)](https://travis-ci.com/timabilov/robots-navigation)
+## timabilov / robots-navigation [![Build Status](https://travis-ci.com/timabilov/robots-navigation.svg?branch=master)](https://travis-ci.com/timabilov/robots-navigation)
+
+# Robot API for navigation 
 
 To run project on docker-compose
 ```bash
@@ -7,7 +9,7 @@ To run project on docker-compose
 
 
 ```ini
-Django==2.0.8
+Django==2.0.12
 psycopg2==2.7.3.2
 pyyaml==5.1
 pytest==4.4.0
