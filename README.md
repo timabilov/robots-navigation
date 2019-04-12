@@ -97,3 +97,14 @@ Logs for robot:
  * Robot:1e3753ce-7d32-4733-ab6c-ce5cc1af82f0  completed. Position: (16, 9)
 
 ```
+
+
+
+* For millions of routes we should carefully optimize our database (indexes, consider partitioning). De-normalization. 
+e.g. in that case de-normalizing of all other relations (Instruction) will be prioritized. Eventually we will have many indexed data everywhere for every purpose (Full text search-optimized, insert optimized and etc.) as table grows.  
+* hundreds of instructions: For best performance De-normalize fields to plain binary value/string. But during that process we can maintain any index of this instructions wherever we want(Postgres, Elastic search  etc.)
+   For 1-10 instructions, we can  store all this values on separate table if we want to get quick and flexible reports for example. 
+* For many users: Server codebase should be thread-safe. Transaction Atomicity should be taken seriously. Redis cluster will be involved for tons of caching. Heavy profiling. Heavy writes will run on background(postgres as example). But indexes will be primary resource. Again, indexes.
+* for frequently changed routes we should build flexible architecture, for example, where each route itself is some named instruction set/group. So we can use/store Route as instruction itself.
+  Basically now we got modular, scalable solution for instructions. And this instruction set can be used by many other planners. Also we will get single source of truth(if we want). 
+  
