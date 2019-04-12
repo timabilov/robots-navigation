@@ -21,31 +21,44 @@ mixer==6.1.3
 To just run script(down below) with already up & running Postgres :
 ```bash
 (venv) $ ./script.sh
-```
 
+# or just with docker compose (Recommended)
 
-Or with docker-compose (Recommended):
-
-```bash
 $ docker-compose run --rm web ./script.sh
 # or
 $ docker-compose run --rm web  bash 
-root@e2a026903899:/app# ./script.sh   
+root@e2a026903899:/app# ./script.sh
+
+
 ```
 
-To run django project on docker-compose
+
+To run django server with docker compos:
+
 ```bash
-./entry.sh
+# Docker compose
+(venv) $ ./entry.sh
+   
+```
+
+To run tests:
+```bash
+(venv) $ ./test.sh
+# or
+$ docker-compose run --rm web ./test.sh
+
 ```
 
 
 
+ We can either use provided API:
+ 
 ```python
 from core.geo import Direction
 from core.route import RouteBuilder
 
 
-# We can either use provided API
+
 
 route = RouteBuilder(name='Example route')\
     .start(245, 161)\
@@ -57,8 +70,9 @@ route = RouteBuilder(name='Example route')\
     .step(3)\
     .build()
 ```
-Or read many routes from yaml:
+Or import list of routes from yaml (schema strict:
 ```yaml
+# See: core.route_schema.SCHEMA
 - name: 'My route'
   start: '10:10'
   steps:

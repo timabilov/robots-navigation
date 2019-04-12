@@ -52,7 +52,33 @@ class RouteBuilder:
 
     @classmethod
     def from_yaml(cls, path):
+        """
+        Import list of routes from .yaml file with predefined schema.
 
+        Example:
+         - name: 'My route'
+          start: '10:10'
+          steps:
+            - north: 3
+            - east: 3
+            - right:
+            - right:
+            - right:
+            - forward: 3
+            - reach: 'Saint Valley'
+
+        - name: 'Route only for packagers'
+          target: "Packagers"
+          steps:
+            - north: 3
+            - east: 3
+            - right:
+
+            - forward: 10
+
+        :param path: str
+        :return RouteSet: Routes manager for bulk operations
+        """
         payload = yaml.safe_load(open(path, 'r'))
         routes = []
         v = Validator()
