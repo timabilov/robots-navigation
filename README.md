@@ -108,8 +108,9 @@ routeset = RouteBuilder.from_yaml('route.yml').save()  # class RouteSet - wrappe
 # We can use directly Robot API. Robots can be separated to groups for further relevant route consuming
 r = Robot().forward(3).forward(5)
 
-# Robot can interpret route which can be created by many different ways
-# For incompatible routes `WrongRouteTargetException` may raise
+# Also robot can interpret route which can be created by many different ways
+# Only if robot group does not comply to route target group(incompatible)
+# - `WrongRouteTargetException` may raise
 for i, route in enumerate(Route.objects.all(), start=1):
     print(f'Route: {i}')
     r.load(route)
