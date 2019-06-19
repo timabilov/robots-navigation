@@ -22,7 +22,7 @@ To just run script(down below) with already up & running Postgres :
 ```bash
 (venv) $ ./script.sh
 
-# or just with docker compose (Recommended)
+# or just with docker-compose (Recommended way)
 
 $ docker-compose run --rm web ./script.sh
 # or
@@ -33,7 +33,7 @@ root@e2a026903899:/app# ./script.sh
 ```
 
 
-To run django server with docker compos:
+To run django server with docker-compose:
 
 ```bash
 # Docker compose
@@ -54,10 +54,9 @@ $ docker-compose run --rm web ./test.sh
  We can either use provided API:
  
 ```python
+from core.bot import Robot
 from core.geo import Direction
 from core.route import RouteBuilder
-
-
 
 
 route = RouteBuilder(name='Example route')\
@@ -69,8 +68,14 @@ route = RouteBuilder(name='Example route')\
     .left()\
     .step(3)\
     .build()
+    
+simple_robot = Robot()
+# robot info will be logged
+simple_robot.load(route)
+
+print(f'Simple robot arrived: {simple_robot.position}')
 ```
-Or import list of routes from yaml (schema strict:
+Or import list of routes from yaml (custom defined - schema strict):
 ```yaml
 # See: core.route_schema.SCHEMA
 - name: 'My route'
@@ -114,12 +119,13 @@ print(f'Arrived: {r.position}')
 
 # Route can be targeted to some dedicated robot group.
 spawn_robots(3, group='Packagers')
+route.notify(target='Packagers') # notify only 'Packagers' about this route
 
 # we can notify all our robots about all our routes (groups also considered), to execute instructions.
 routeset.notify_bots()
 
-# notify only 'New group' about this route
-route.notify(target='New group')
+
+
 
 ```
 
@@ -127,12 +133,14 @@ route.notify(target='New group')
 Logs for robot:
 
 ```
->> Robot:1e3753ce-7d32-4733-ab6c-ce5cc1af82f0  <Route only for packagers> Position: (13, 16).
- - Instruction.NORTH: 3. Position: (13, 19)
- - Instruction.EAST: 3. Position: (16, 19)
- - Instruction.RIGHT: <>. Position: (16, 19)
- - Instruction.FORWARD: 10. Position: (16, 9)
- * Robot:1e3753ce-7d32-4733-ab6c-ce5cc1af82f0  completed. Position: (16, 9)
+>> Robot:daf3fecb-19c0-44b7-aed0-af81ac315a20  <Example route> Position: (245, 161).
+ - Instruction.NORTH: 5. Position: (245, 166)
+ - Instruction.RIGHT: <>. Position: (245, 166)
+ - Instruction.REACH: Statue of Old Man with Large Hat. Position: (245, 166)
+ - Instruction.WEST: 25. Position: (220, 166)
+ - Instruction.LEFT: <>. Position: (220, 166)
+ - Instruction.FORWARD: 3. Position: (220, 163)
+ * Robot:daf3fecb-19c0-44b7-aed0-af81ac315a20  completed. Position: (220, 163)
 
 ```
 
@@ -145,4 +153,3 @@ e.g. in that case de-normalizing of all other relations (Instruction) will be pr
 * For many users: Server codebase should be thread-safe. Transaction Atomicity should be taken seriously. Redis cluster will be involved for tons of caching. Heavy profiling. Heavy writes will run on background(postgres as example). But indexes will be primary resource. Again, indexes.
 * for frequently changed routes we should build flexible architecture, for example, where each route itself is some named instruction set/group. So we can use/store Route as instruction itself.
   Basically now we got modular, scalable solution for instructions. And this instruction set can be used by many other planners. Also we will get single source of truth(if we want). 
-  

@@ -85,7 +85,6 @@ class Robot:
 
     def go(self, blocks=1, direction=None):
         direction = self.facing if not direction else direction
-        print(self.position, direction.value, direction)
         self.position += direction * int(blocks)
         self.facing = direction
         return self
@@ -123,8 +122,8 @@ class Robot:
 
     def reach(self, destination):
 
-        if destination:
-            print(f'  Heading to "{destination}"...')
+        # if destination:
+        #     print(f'  Heading to "{destination}"...')
         return self
 
     def __str__(self):

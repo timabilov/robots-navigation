@@ -16,6 +16,12 @@ route = RouteBuilder(name='Example route')\
     .step(3)\
     .build()
 
+simple_robot = Robot()
+# robot info will be logged
+simple_robot.load(route)
+
+print(f'Simple robot arrived: {simple_robot.position}')
+
 # Or read many routes from yaml
 # ```
 # - name: 'My route'
@@ -55,11 +61,12 @@ print(f'Arrived: {r.position}')
 
 # Route can be targeted to some dedicated robot group.
 spawn_robots(3, group='Packagers')
+route.notify(target='Packagers') # notify only 'Packagers' about this route
 
 # we can notify all our robots about all our routes (groups also considered), to execute instructions.
 routeset.notify_bots()
 
-# notify only 'New group' about this route
-route.notify(target='New group')
+
+
 
 
